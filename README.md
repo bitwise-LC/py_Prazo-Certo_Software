@@ -53,11 +53,11 @@ pip install -r backend/requirements.txt
 cp backend/.env.example backend/.env
 ```
 
+##
+
 Edite `backend/.env` com a senha do MySQL. Depois execute, em terminais separados:
 
 > Não deixe `sua_senha` no arquivo `.env`: esse texto é apenas um marcador. Antes de iniciar a API, confirme que o serviço MySQL/MariaDB está ativo e importe o script SQL.
-
-##
 
 ```bash
 cd backend
