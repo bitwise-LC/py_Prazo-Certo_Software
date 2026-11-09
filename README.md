@@ -43,9 +43,21 @@ pip install -r backend/requirements.txt
 cp backend/.env.example backend/.env
 ```
 
+## Versão Wamp Server 
+
+```powershell 
+Get-Content backend/database/create_database.sql | &(Get-Item C:\wamp64\bin\mysql\mysql*\bin\mysql.exe).FullName -u root -p
+python -m venv .venv
+.venv\Scripts\Activate.ps1
+pip install -r backend/requirements.txt
+cp backend/.env.example backend/.env
+```
+
 Edite `backend/.env` com a senha do MySQL. Depois execute, em terminais separados:
 
 > Não deixe `sua_senha` no arquivo `.env`: esse texto é apenas um marcador. Antes de iniciar a API, confirme que o serviço MySQL/MariaDB está ativo e importe o script SQL.
+
+##
 
 ```bash
 cd backend
