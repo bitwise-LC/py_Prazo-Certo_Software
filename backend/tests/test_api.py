@@ -84,6 +84,16 @@ def test_calendario_alertas_dashboard_e_promocoes(client, organizacao):
     assert len(client.get("/api/promocoes/sugestoes", headers=headers).get_json()) == 1
 
 
+def test_notificacoes_consideram_produtos_ate_quinze_dias(client, organizacao):
+    cadastrar_produto(client, organizacao, codigo="NOT-015", dias_validade=12)
+    headers = organizacao["headers"]
+
+    assert client.get("/api/alertas?dias=7", headers=headers).get_json() == []
+    alertas = client.get("/api/alertas?dias=15", headers=headers).get_json()
+    assert len(alertas) == 1
+    assert alertas[0]["codigo_produto"] == "NOT-015"
+
+
 def test_registrar_e_listar_saida_atualiza_estoque(client, organizacao):
     produto = cadastrar_produto(client, organizacao).get_json()
     headers = organizacao["headers"]

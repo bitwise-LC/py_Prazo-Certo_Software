@@ -1,5 +1,20 @@
 let mesExibido = new Date();
 
+function faixaVencimento(dataVencimento) {
+  const hoje = new Date();
+  hoje.setHours(0, 0, 0, 0);
+  dataVencimento.setHours(0, 0, 0, 0);
+
+  const diferencaEmDias = Math.ceil((dataVencimento - hoje) / 86400000);
+
+  // Produtos já vencidos ou que vencem nos próximos 7 dias.
+  if (diferencaEmDias <= 7) return "urgente";
+  // Produtos que vencem entre 8 e 14 dias.
+  if (diferencaEmDias <= 14) return "atencao";
+  // Produtos com vencimento posterior a duas semanas.
+  return "seguro";
+}
+
 async function montarCalendario() {
   PrazoAPI.exigirSessao();
   const ano = mesExibido.getFullYear(), mes = mesExibido.getMonth();
@@ -11,8 +26,17 @@ async function montarCalendario() {
   let html = Array.from({ length: primeiro }, () => '<div class="dia outro"></div>').join("");
   for (let dia = 1; dia <= total; dia++) {
     const itens = porDia[dia] || [];
-    const hoje = new Date().toDateString() === new Date(ano, mes, dia).toDateString();
-    html += '<div class="dia' + (hoje ? ' hoje' : '') + '" title="' + itens.map(p => p.nome + ' (' + p.quantidade_estoque + ')').join(', ') + '"><span>' + dia + '</span><div class="marcadores">' + itens.slice(0,5).map((_,i) => '<i class="marcador ' + ['roxo','laranja','azul','amarelo','escuro'][i] + '"></i>').join('') + '</div></div>';
+    const dataDoDia = new Date(ano, mes, dia);
+    const hoje = new Date().toDateString() === dataDoDia.toDateString();
+    const faixa = itens.length ? faixaVencimento(dataDoDia) : "";
+    const descricao = itens.map(p => p.nome + ' (' + p.quantidade_estoque + ')').join(', ');
+    const marcadores = itens.slice(0, 5).map(p =>
+      '<i class="marcador ' + faixa + '" title="' + p.nome + '"></i>'
+    ).join('');
+
+    html += '<div class="dia' + (hoje ? ' hoje' : '') + (faixa ? ' com-vencimento ' + faixa : '') +
+      '" title="' + descricao + '"><span>' + dia + '</span><div class="marcadores">' +
+      marcadores + '</div></div>';
   }
   document.getElementById("dias").innerHTML = html;
 }

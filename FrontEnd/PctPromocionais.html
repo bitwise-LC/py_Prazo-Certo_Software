@@ -31,12 +31,19 @@
             </div>
 
         </section>
+        <section class="acoes-pacotes">
+            <button id="restaurarPacotes" class="btn-restaurar-pacotes" type="button" hidden>
+                <i class="bi bi-arrow-counterclockwise"></i> Restaurar recusados
+            </button>
+        </section>
+        <p id="statusPacotes" class="status-pacotes" role="status" hidden></p>
         <section id="listaPacotes" class="lista-pacotes">
             <p>Carregando sugestões...</p>
         </section>
 </main>
 <script src="api.js"></script>
-<script src="notificacoes.js"></script>
+<script src="alertas.js?v=1"></script>
+<script src="notificacoes.js?v=2"></script>
 </body>
 
 </html>

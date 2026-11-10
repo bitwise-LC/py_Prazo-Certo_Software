@@ -131,7 +131,23 @@ ul li.item-menu a .icon>i {
 }
 
 .lista-pacotes { display: grid; gap: 18px; }
-.pacote { border: 1px solid #dce5ea; border-radius: 16px; padding: 22px; box-shadow: 0 4px 12px #00355418; }
+.pacote { border: 1px solid #dce5ea; border-radius: 16px; padding: 22px; box-shadow: 0 4px 12px #00355418; display: flex; justify-content: space-between; align-items: center; gap: 24px; }
 .pacote h2 { color: #062f4f; font-size: 19px; margin-bottom: 8px; }
 .pacote p { color: #666; margin-bottom: 10px; }
 .pacote strong { color: #237a42; }
+
+.acoes-pacotes { display: flex; justify-content: flex-end; margin-bottom: 14px; }
+.btn-recusar-pacote,
+.btn-restaurar-pacotes { border: 0; border-radius: 10px; cursor: pointer; font-weight: 600; padding: 10px 14px; transition: 0.2s ease; }
+.btn-recusar-pacote { background: #fff1f1; color: #a22525; white-space: nowrap; }
+.btn-recusar-pacote:hover { background: #ffdede; }
+.btn-restaurar-pacotes { background: #e7f2f7; color: #036181; }
+.btn-restaurar-pacotes:hover { background: #d5eaf2; }
+.status-pacotes { background: #e9f7ef; border: 1px solid #bce0ca; border-radius: 10px; color: #237a42; margin-bottom: 14px; padding: 10px 14px; }
+.pacotes-vazios { color: #666; padding: 22px; text-align: center; }
+.pacotes-erro { color: #a22525; }
+
+@media (max-width: 700px) {
+    .pacote { align-items: stretch; flex-direction: column; }
+    .btn-recusar-pacote { width: 100%; }
+}

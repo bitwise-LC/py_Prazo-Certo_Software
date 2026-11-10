@@ -41,7 +41,25 @@ const PrazoAPI = {
 
   dataBR(valor) {
     if (!valor) return "—";
-    return new Date(valor + "T12:00:00").toLocaleDateString("pt-BR");
+
+    const texto = String(valor).trim();
+    const dataIso = texto.match(/^(\d{4})-(\d{2})-(\d{2})(?:$|[T\s])/);
+    let data;
+
+    if (dataIso) {
+      data = new Date(
+        Number(dataIso[1]),
+        Number(dataIso[2]) - 1,
+        Number(dataIso[3]),
+        12
+      );
+    } else {
+      data = new Date(texto);
+    }
+
+    return Number.isNaN(data.getTime())
+      ? "—"
+      : data.toLocaleDateString("pt-BR", { timeZone: "UTC" });
   },
 
   moeda(valor) {
